@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Bookings</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-table {
+            width: 95%;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .admin-table th, .admin-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+        .admin-table th {
+            background: #f5d020;
+            color: #222;
+            font-weight: bold;
+        }
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+        .admin-title {
+            text-align: center;
+            margin-top: 2rem;
+            color: #222;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="admin-title">Admin Dashboard - Bookings</h1>
+    <table class="admin-table" id="bookings-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Tickets</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script src="admin.js"></script>
+</body>
+</html>
