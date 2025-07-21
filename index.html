@@ -1,0 +1,30 @@
+<!-- Booking Modal -->
+<div id="booking-modal" class="modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;">
+  <div class="modal-content" style="background:#fff;padding:2em 2.5em;border-radius:12px;max-width:400px;width:90%;position:relative;">
+    <button id="close-booking-modal" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:1.5em;cursor:pointer;">&times;</button>
+    <h2>Book Event</h2>
+    <form id="modal-booking-form" autocomplete="off">
+      <div class="form-group">
+        <span class="form-icon">👤</span>
+        <input type="text" name="name" required placeholder=" " />
+        <label>Name</label>
+      </div>
+      <div class="form-group">
+        <span class="form-icon">✉️</span>
+        <input type="email" name="email" required placeholder=" " />
+        <label>Email</label>
+      </div>
+      <div class="form-group">
+        <span class="form-icon">📱</span>
+        <input type="tel" name="phone" required pattern="[0-9]{10,15}" placeholder=" " />
+        <label>Phone Number</label>
+      </div>
+      <div class="form-group">
+        <span class="form-icon">🎟️</span>
+        <input type="number" name="tickets" min="1" value="1" required placeholder=" " />
+        <label>Tickets</label>
+      </div>
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+</div> 
