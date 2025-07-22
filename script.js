@@ -374,7 +374,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const username = loginForm.loginUsername.value.trim();
             const password = loginForm.loginPassword.value;
             let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
                 alert('Login successful!');
                 setSessionUser(username);
                 loginModal.style.display = 'none';
@@ -406,24 +407,29 @@ document.addEventListener('DOMContentLoaded', function() {
         let navLogout = document.getElementById('nav-logout');
         const user = getSessionUser();
         if (user) {
+            if (navLogin) navLogin.style.display = 'none';
+            if (navSignup) navSignup.style.display = 'none';
+            if (navAddEvent) navAddEvent.style.display = 'inline-block';
+
             if (!navUser) {
                 navUser = document.createElement('span');
                 navUser.id = 'nav-user';
                 navUser.className = 'nav-user';
-                // Create avatar with initials
-                const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
-                navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
-                navLogin.parentNode.insertBefore(navUser, navLogin);
-            } else {
-                const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
-                navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
+                const navRight = document.querySelector('.nav-right');
+                if (navRight) navRight.appendChild(navUser);
             }
+            
+            const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
+
             if (!navLogout) {
                 navLogout = document.createElement('button');
                 navLogout.id = 'nav-logout';
                 navLogout.textContent = 'Logout';
-                navLogout.style.cssText = 'background:rgba(255,255,255,0.18);color:#fff;border:none;border-radius:7px;padding:0.4rem 1.1rem;font-size:1em;cursor:pointer;';
-                navLogin.parentNode.insertBefore(navLogout, navLogin);
+                navLogout.className = 'nav-button';
+                const navRight = document.querySelector('.nav-right');
+                if (navRight) navRight.appendChild(navLogout);
+
                 navLogout.onclick = function() {
                     clearSessionUser();
                     updateNavbarAuth();
@@ -431,109 +437,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     showToast('Logged out!');
                 };
             }
-            navLogin.style.display = 'none';
-            navSignup.style.display = 'none';
-            if (navAddEvent) navAddEvent.style.display = '';
+            if (navLogout) navLogout.style.display = 'inline-block';
+            
         } else {
+            if (navLogin) navLogin.style.display = 'inline-block';
+            if (navSignup) navSignup.style.display = 'inline-block';
+            if (navAddEvent) navAddEvent.style.display = 'none';
             if (navUser) navUser.remove();
             if (navLogout) navLogout.remove();
-            navLogin.style.display = '';
-            navSignup.style.display = '';
-            if (navAddEvent) navAddEvent.style.display = 'none';
         }
     }
-
-    // Restrict Add Event to logged-in users
-    // Use the already declared navAddEvent and addEventBtn
-    if (navAddEvent) navAddEvent.style.display = 'none';
-    if (addEventBtn) addEventBtn.style.display = 'none';
 
     // On page load, update navbar
     updateNavbarAuth();
-
-    // Show Add Event button only if logged in
-    if (getSessionUser()) {
-        if (addEventBtn) addEventBtn.style.display = '';
-    }
-
-    // After successful login
-    if (loginForm) {
-        loginForm.onsubmit = function(e) {
-            e.preventDefault();
-            const username = loginForm.loginUsername.value.trim();
-            const password = loginForm.loginPassword.value;
-            let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
-                alert('Login successful!');
-                setSessionUser(username);
-                loginModal.style.display = 'none';
-                loginForm.reset();
-                updateNavbarAuth();
-                if (addEventBtn) addEventBtn.style.display = '';
-                showToast('Login successful!');
-            } else {
-                alert('Invalid username or password.');
-            }
-        };
-    }
-
-    // After logout, hide Add Event button
-    // (Handled in updateNavbarAuth)
-
-    // Check login status on load
-    showMainContent(isLoggedIn());
-    // On successful login/signup, show main content
-    const loginFormOnload = document.getElementById('login-form');
-    if (loginFormOnload) {
-        loginFormOnload.onsubmit = function(e) {
-            e.preventDefault();
-            const username = loginFormOnload.loginUsername.value.trim();
-            const password = loginFormOnload.loginPassword.value;
-            let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
-                setSessionUser(username);
-                showMainContent(true);
-                loginFormOnload.reset();
-                showToast('Login successful!');
-            } else {
-                alert('Invalid username or password.');
-            }
-        };
-    }
-    const signupFormOnload = document.getElementById('signup-form');
-    if (signupFormOnload) {
-        signupFormOnload.onsubmit = function(e) {
-            e.preventDefault();
-            const username = signupFormOnload.signupUsername.value.trim();
-            const password = signupFormOnload.signupPassword.value;
-            const confirm = signupFormOnload.signupConfirmPassword.value;
-            if (password !== confirm) {
-                alert('Passwords do not match.');
-                return;
-            }
-            let users = getUsers();
-            if (users.find(u => u.username === username)) {
-                alert('Username already exists.');
-                return;
-            }
-            users.push({ username, password });
-            saveUsers(users);
-            setSessionUser(username);
-            showMainContent(true);
-            signupFormOnload.reset();
-            showToast('Sign up successful!');
-        };
-    }
-    // On logout, hide main content and show login
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.id === 'nav-logout') {
-            clearSessionUser();
-            showMainContent(false);
-            showToast('Logged out!');
-        }
-    });
-    // Prevent access to main content if not logged in
-    if (!isLoggedIn()) {
-        showMainContent(false);
-    }
 }); 
