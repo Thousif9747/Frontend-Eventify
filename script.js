@@ -29,6 +29,7 @@ function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
+
 function loadEvents() {
     const stored = localStorage.getItem('events');
     if (stored) {
@@ -82,6 +83,7 @@ function renderEvents(filter = '', category = '', page = 1) {
         `;
         eventList.appendChild(card);
     });
+    // Pagination controls
     if (pagination) {
         pagination.innerHTML = '';
         if (totalPages > 1) {
@@ -95,6 +97,7 @@ function renderEvents(filter = '', category = '', page = 1) {
             }
         }
     }
+    // Add delete event listeners
     document.querySelectorAll('.delete-event-btn').forEach(btn => {
         btn.onclick = function() {
             const id = parseInt(this.getAttribute('data-id'));
@@ -105,6 +108,7 @@ function renderEvents(filter = '', category = '', page = 1) {
             }
         };
     });
+    // Book button logic: navigate to event.html with event id
     document.querySelectorAll('.book-btn').forEach(btn => {
         btn.onclick = function(e) {
             e.preventDefault();
@@ -113,6 +117,8 @@ function renderEvents(filter = '', category = '', page = 1) {
         };
     });
 }
+
+// Toast notification logic
 function showToast(message, duration = 2500) {
     const toast = document.getElementById('toast');
     if (!toast) return;
@@ -120,7 +126,7 @@ function showToast(message, duration = 2500) {
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), duration);
 }
-
+// Spinner logic
 function showSpinner(show = true) {
     const spinner = document.getElementById('global-spinner');
     if (!spinner) return;
@@ -145,10 +151,13 @@ function isLoggedIn() {
     return !!localStorage.getItem('sessionUser');
 }
 document.addEventListener('DOMContentLoaded', function() {
+    // Animate main content on page load
     const main = document.querySelector('main');
     if (main) main.classList.add('fade-in');
+    // Render events from localStorage or default
     renderEvents();
 
+    // Event search functionality
     const eventSearch = document.getElementById('event-search');
     const categoryFilter = document.getElementById('category-filter');
 
@@ -158,12 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Category filter logic
     if (categoryFilter) {
         categoryFilter.addEventListener('change', function() {
             renderEvents(eventSearch?.value || '', categoryFilter.value, 1);
         });
     }
 
+    // Navbar Add Event button opens modal
     const navAddEvent = document.getElementById('nav-add-event');
     const addEventModal = document.getElementById('add-event-modal');
     const addEventForm = document.getElementById('add-event-form');
@@ -247,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tickets = bookingForm.tickets.value;
                 const phone = bookingForm.phone.value.trim();
 
+                // Phone validation
                 if (!/^\d{10}$/.test(phone)) {
                     showToast('Please enter a valid 10-digit phone number.');
                     bookingForm.phone.focus();
@@ -303,6 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Login/Signup modal logic
     const loginModal = document.getElementById('login-modal');
     const signupModal = document.getElementById('signup-modal');
     const navLogin = document.getElementById('nav-login');
@@ -319,12 +332,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (loginModal && loginForm) loginModal.onclick = e => { if (e.target === loginModal) { loginModal.style.display = 'none'; loginForm.reset(); } };
     if (signupModal && signupForm) signupModal.onclick = e => { if (e.target === signupModal) { signupModal.style.display = 'none'; signupForm.reset(); } };
 
+    // LocalStorage user management
     function getUsers() {
         const u = localStorage.getItem('users');
         if (u) try { return JSON.parse(u); } catch { return []; }
         return [];
     }
-    function saveUsers(users) { localStorage.setItem('users', JSON.stringify(users)); 
+    function saveUsers(users) { localStorage.setItem('users', JSON.stringify(users)); }
+
+    // Sign Up
     if (signupForm) {
         signupForm.onsubmit = function(e) {
             e.preventDefault();
@@ -348,13 +364,16 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('Sign up successful!');
         };
     }
+
+    // Login
     if (loginForm) {
         loginForm.onsubmit = function(e) {
             e.preventDefault();
             const username = loginForm.loginUsername.value.trim();
             const password = loginForm.loginPassword.value;
             let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
+            const user = users.find(u => u.username === username && u.password === password);
+            if (user) {
                 alert('Login successful!');
                 setSessionUser(username);
                 loginModal.style.display = 'none';
@@ -366,6 +385,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
     }
+
+    // Session management
     function setSessionUser(username) {
         localStorage.setItem('sessionUser', username);
     }
@@ -384,23 +405,29 @@ document.addEventListener('DOMContentLoaded', function() {
         let navLogout = document.getElementById('nav-logout');
         const user = getSessionUser();
         if (user) {
+            if (navLogin) navLogin.style.display = 'none';
+            if (navSignup) navSignup.style.display = 'none';
+            if (navAddEvent) navAddEvent.style.display = 'inline-block';
+
             if (!navUser) {
                 navUser = document.createElement('span');
                 navUser.id = 'nav-user';
                 navUser.className = 'nav-user';
-                const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
-                navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
-                navLogin.parentNode.insertBefore(navUser, navLogin);
-            } else {
-                const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
-                navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
+                const navRight = document.querySelector('.nav-right');
+                if (navRight) navRight.appendChild(navUser);
             }
+            
+            const initials = user.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            navUser.innerHTML = `<span class="user-avatar">${initials}</span> <span class="user-name">${user}</span>`;
+
             if (!navLogout) {
                 navLogout = document.createElement('button');
                 navLogout.id = 'nav-logout';
                 navLogout.textContent = 'Logout';
-                navLogout.style.cssText = 'background:rgba(255,255,255,0.18);color:#fff;border:none;border-radius:7px;padding:0.4rem 1.1rem;font-size:1em;cursor:pointer;';
-                navLogin.parentNode.insertBefore(navLogout, navLogin);
+                navLogout.className = 'nav-button';
+                const navRight = document.querySelector('.nav-right');
+                if (navRight) navRight.appendChild(navLogout);
+
                 navLogout.onclick = function() {
                     clearSessionUser();
                     updateNavbarAuth();
@@ -408,100 +435,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     showToast('Logged out!');
                 };
             }
-            navLogin.style.display = 'none';
-            navSignup.style.display = 'none';
-            if (navAddEvent) navAddEvent.style.display = '';
+            if (navLogout) navLogout.style.display = 'inline-block';
+            
         } else {
+            if (navLogin) navLogin.style.display = 'inline-block';
+            if (navSignup) navSignup.style.display = 'inline-block';
+            if (navAddEvent) navAddEvent.style.display = 'none';
             if (navUser) navUser.remove();
             if (navLogout) navLogout.remove();
-            navLogin.style.display = '';
-            navSignup.style.display = '';
-            if (navAddEvent) navAddEvent.style.display = 'none';
         }
     }
 
-    
-    if (navAddEvent) navAddEvent.style.display = 'none';
-    if (addEventBtn) addEventBtn.style.display = 'none';
-
-    
+    // On page load, update navbar
     updateNavbarAuth();
-
-    
-    if (getSessionUser()) {
-        if (addEventBtn) addEventBtn.style.display = '';
-    }
-
-  
-    if (loginForm) {
-        loginForm.onsubmit = function(e) {
-            e.preventDefault();
-            const username = loginForm.loginUsername.value.trim();
-            const password = loginForm.loginPassword.value;
-            let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
-                alert('Login successful!');
-                setSessionUser(username);
-                loginModal.style.display = 'none';
-                loginForm.reset();
-                updateNavbarAuth();
-                if (addEventBtn) addEventBtn.style.display = '';
-                showToast('Login successful!');
-            } else {
-                alert('Invalid username or password.');
-            }
-        };
-    }
-    showMainContent(isLoggedIn());
-    const loginFormOnload = document.getElementById('login-form');
-    if (loginFormOnload) {
-        loginFormOnload.onsubmit = function(e) {
-            e.preventDefault();
-            const username = loginFormOnload.loginUsername.value.trim();
-            const password = loginFormOnload.loginPassword.value;
-            let users = getUsers();
-            if (users.find(u => u.username === username && u.password === password)) {
-                setSessionUser(username);
-                showMainContent(true);
-                loginFormOnload.reset();
-                showToast('Login successful!');
-            } else {
-                alert('Invalid username or password.');
-            }
-        };
-    }
-    const signupFormOnload = document.getElementById('signup-form');
-    if (signupFormOnload) {
-        signupFormOnload.onsubmit = function(e) {
-            e.preventDefault();
-            const username = signupFormOnload.signupUsername.value.trim();
-            const password = signupFormOnload.signupPassword.value;
-            const confirm = signupFormOnload.signupConfirmPassword.value;
-            if (password !== confirm) {
-                alert('Passwords do not match.');
-                return;
-            }
-            let users = getUsers();
-            if (users.find(u => u.username === username)) {
-                alert('Username already exists.');
-                return;
-            }
-            users.push({ username, password });
-            saveUsers(users);
-            setSessionUser(username);
-            showMainContent(true);
-            signupFormOnload.reset();
-            showToast('Sign up successful!');
-        };
-    }
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.id === 'nav-logout') {
-            clearSessionUser();
-            showMainContent(false);
-            showToast('Logged out!');
-        }
-    });
-    if (!isLoggedIn()) {
-        showMainContent(false);
-    }
 }); 
