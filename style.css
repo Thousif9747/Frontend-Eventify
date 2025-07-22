@@ -31,12 +31,10 @@ main {
     flex: 1 0 auto;
 }
 
-/* Smooth transitions for all interactive elements */
 button, .button, a, input, textarea, .event-card, .modal, .nav-user, #nav-logout {
     transition: all 0.2s cubic-bezier(.4,0,.2,1);
 }
 
-/* Glassmorphism for nav and modals */
 .main-header, .modal-content {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(12px) saturate(1.2);
@@ -44,17 +42,14 @@ button, .button, a, input, textarea, .event-card, .modal, .nav-user, #nav-logout
     box-shadow: 0 8px 32px 0 rgba(31,38,135,0.10);
 }
 
-/* Soft, layered shadows for cards and modals */
 .event-card, .modal-content, .confirmation-card, .event-details-card {
     box-shadow: 0 4px 24px 0 rgba(31,38,135,0.10), 0 1.5px 0 0 #f5d020;
 }
 
-/* Consistent border-radius */
 .event-card, .modal-content, .confirmation-card, .event-details-card, .main-footer, .button, input, textarea, .nav-user, #nav-logout {
     border-radius: 1rem !important;
 }
 
-/* Typography improvements */
 h1, h2, h3 {
     font-family: 'Montserrat', 'Inter', Arial, sans-serif;
     font-weight: 800;
@@ -71,14 +66,12 @@ h3 {
     font-size: 1.3rem;
 }
 
-/* Layout & Spacing */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
 }
 
-/* Header & Navigation */
 .main-header {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -181,7 +174,6 @@ h3 {
     border-color: var(--primary);
 }
 
-/* Hero Section */
 .hero-section {
     background: var(--gradient);
     padding: 5rem 1rem;
@@ -224,7 +216,6 @@ h3 {
     font-weight: 400;
 }
 
-/* Search Container */
 .search-container {
     display: flex;
     max-width: 600px;
@@ -262,7 +253,6 @@ h3 {
     color: var(--white);
 }
 
-/* Events Section */
 .events-section {
     padding: 6rem 1.5rem;
     max-width: 1200px;
@@ -299,7 +289,6 @@ h3 {
     padding: 0.5rem;
 }
 
-/* Event Card */
 .event-card {
     background: var(--white);
     border-radius: var(--radius);
@@ -381,7 +370,6 @@ h3 {
     text-decoration: none;
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -465,7 +453,6 @@ h3 {
     background: var(--border);
 }
 
-/* Footer */
 .main-footer {
     background: var(--white);
     border-top: 1px solid var(--border);
@@ -598,7 +585,6 @@ h3 {
     }
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .hero-content h1 {
         font-size: 2rem;
@@ -785,7 +771,6 @@ h3 {
     letter-spacing: 0.01em;
 } 
 
-/* Toast Notification */
 .toast {
     position: fixed;
     bottom: 2.5rem;
@@ -809,7 +794,6 @@ h3 {
     bottom: 3.5rem;
 }
 
-/* Loading Spinner */
 .spinner {
     display: inline-block;
     width: 2.2em;
@@ -955,7 +939,6 @@ h3 {
     transform: scale(1.2) rotate(8deg);
 } 
 
-/* Animated Page/Modal Transitions */
 .fade-in {
     animation: fadeInPage 0.35s cubic-bezier(.4,0,.2,1);
 }
