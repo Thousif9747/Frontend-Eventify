@@ -3,161 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventify - Book Your Events</title>
+    <title>Eventify - Welcome</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .about-hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f3f4f6 100%);
+            padding: 3em 1em 2em 1em;
+            text-align: center;
+        }
+        .about-hero h1 {
+            font-size: 2.7em;
+            font-weight: 800;
+            margin-bottom: 0.5em;
+            color: var(--primary);
+        }
+        .about-hero p {
+            font-size: 1.25em;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2em auto;
+        }
+        .about-actions {
+            display: flex;
+            gap: 1.5em;
+            justify-content: center;
+            margin-top: 2em;
+        }
+        .about-actions a {
+            padding: 1em 2.5em;
+            border-radius: 2em;
+            font-size: 1.15em;
+            font-weight: 700;
+            text-decoration: none;
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(245,158,11,0.10);
+            transition: background 0.2s, transform 0.1s;
+        }
+        .about-actions a.secondary {
+            background: var(--secondary);
+        }
+        .about-actions a:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        .about-actions a.secondary:hover {
+            background: #d32f2f;
+        }
+        @media (max-width: 600px) {
+            .about-hero h1 { font-size: 2em; }
+            .about-actions { flex-direction: column; gap: 1em; }
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
         <nav class="nav-container">
             <div class="nav-left">
-                <a href="/" class="brand">🎫 Eventify</a>
-                <a href="/" class="nav-link active">Home</a>
-                <button id="nav-add-event" class="nav-button">+ Add Event</button>
+                <a href="index.html" class="brand">🎫 Eventify</a>
+                <a href="index.html" class="nav-link active">About</a>
             </div>
             <div class="nav-right">
-                <button id="nav-login" class="nav-button">Login</button>
-                <button id="nav-signup" class="nav-button">Sign Up</button>
+                <a href="auth.html" class="nav-button">Login</a>
+                <a href="auth.html" class="nav-button">Sign Up</a>
         </div>
         </nav>
     </header>
-
     <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Discover Amazing Events</h1>
-                <p class="hero-subtitle">Book tickets for the best events in your city</p>
-                <div class="search-container">
-                    <input id="event-search" type="text" placeholder="Search events by name or venue..." />
-                    <button class="search-button">
-                        <span class="material-icons">search</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section class="events-section">
-            <div class="section-header">
-                <h2>Upcoming Events</h2>
-                <p>Don't miss out on these exciting events</p>
-            </div>
-            <div style="display:flex;justify-content:center;margin-bottom:2rem;">
-                <select id="category-filter" title="Filter by category" style="padding:0.6em 1.2em;border-radius:0.7em;border:1.5px solid #f59e0b;font-size:1.08em;outline:none;">
-                    <option value="">All Categories</option>
-                    <option value="Music">Music</option>
-                    <option value="Art">Art</option>
-                    <option value="Tech">Tech</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Education">Education</option>
-                </select>
-            </div>
-            <div id="event-list" class="event-grid"></div>
-            <div id="pagination" style="display:flex;justify-content:center;margin:2.5em 0 1.5em 0;gap:0.7em;"></div>
-            <div id="event-details-modal" class="modal" style="display:none;align-items:center;justify-content:center;z-index:2000;">
-                <div class="modal-content" id="event-details-modal-content" style="max-width:600px;width:98vw;position:relative;"></div>
-            </div>
-        </section>
-
-        <!-- Add Event Modal -->
-        <section id="add-event-modal" class="modal" aria-modal="true" role="dialog">
-            <div class="modal-content">
-                <form id="add-event-form">
-                    <h2>Add New Event</h2>
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Event Name" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="event-date">Date</label>
-                        <input type="date" id="event-date" name="date" required title="Event date" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="venue" placeholder="Venue" required />
-                    </div>
-                    <div class="form-group">
-                        <textarea name="description" placeholder="Description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="image" placeholder="Image URL (or leave blank)" />
-                    </div>
-                    <div class="form-group">
-                        <label for="event-category">Category</label>
-                        <select name="category" id="event-category" required style="padding:0.7rem;border-radius:7px;border:1.2px solid #f5d020;">
-                            <option value="">Select Category</option>
-                            <option value="Music">Music</option>
-                            <option value="Art">Art</option>
-                            <option value="Tech">Tech</option>
-                            <option value="Sports">Sports</option>
-                            <option value="Education">Education</option>
-                        </select>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" id="cancel-add-event" class="button button-secondary">Cancel</button>
-                        <button type="submit" class="button button-primary">Add Event</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <!-- Login Modal -->
-        <section id="login-modal" class="modal" aria-modal="true" role="dialog">
-            <div class="modal-content">
-                <form id="login-form">
-                    <h2>Welcome Back</h2>
-                    <div class="form-group">
-                        <input type="text" name="loginUsername" placeholder="Username" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="loginPassword" placeholder="Password" required />
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" id="cancel-login" class="button button-secondary">Cancel</button>
-                        <button type="submit" class="button button-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <!-- Signup Modal -->
-        <section id="signup-modal" class="modal" aria-modal="true" role="dialog">
-            <div class="modal-content">
-                <form id="signup-form">
-                    <h2>Create Account</h2>
-                    <div class="form-group">
-                        <input type="text" name="signupUsername" placeholder="Username" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="signupPassword" placeholder="Password" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="signupConfirmPassword" placeholder="Confirm Password" required />
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" id="cancel-signup" class="button button-secondary">Cancel</button>
-                        <button type="submit" class="button button-primary">Sign Up</button>
-                    </div>
-                </form>
+        <section class="about-hero">
+            <h1>Welcome to Eventify</h1>
+            <p>Eventify is your one-stop platform to discover, book, and enjoy amazing events in your city. Whether you love music, art, tech, sports, or education, Eventify brings the best experiences to your fingertips. Sign up or log in to start booking your next adventure!</p>
+            <div class="about-actions">
+                <a href="auth.html">Login</a>
+                <a href="auth.html" class="secondary">Sign Up</a>
             </div>
         </section>
     </main>
-
     <footer class="main-footer">
         <div class="footer-content">
             <p>&copy; 2024 Eventify. All rights reserved.</p>
-            <div class="footer-social" style="margin-top:1em;">
-                <a href="https://twitter.com/" target="_blank" rel="noopener" class="footer-icon" aria-label="Twitter"><span class="material-icons">alternate_email</span></a>
-                <a href="https://facebook.com/" target="_blank" rel="noopener" class="footer-icon" aria-label="Facebook"><span class="material-icons">facebook</span></a>
-                <a href="https://instagram.com/" target="_blank" rel="noopener" class="footer-icon" aria-label="Instagram"><span class="material-icons">photo_camera</span></a>
-                <a href="mailto:info@eventify.com" class="footer-icon" aria-label="Email"><span class="material-icons">mail</span></a>
-            </div>
-            <p style="margin-top:0.5em; color:var(--text-light); font-size:1em;">Eventify is your one-stop platform to discover, book, and enjoy amazing events in your city. Powered by passion for great experiences!</p>
         </div>
     </footer>
-
-    <div id="toast" class="toast"></div>
-    <div id="global-spinner" class="spinner" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;"></div>
-
-    <script src="script.js"></script>
 </body>
 </html> 
 

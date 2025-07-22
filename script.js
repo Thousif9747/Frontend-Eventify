@@ -135,6 +135,23 @@ function showSpinner(show = true) {
     spinner.style.display = show ? 'block' : 'none';
 }
 
+function showMainContent(loggedIn) {
+    const mainContent = document.getElementById('main-content');
+    const loginModal = document.getElementById('login-modal');
+    const signupModal = document.getElementById('signup-modal');
+    if (loggedIn) {
+        if (mainContent) mainContent.style.display = '';
+        if (loginModal) loginModal.style.display = 'none';
+        if (signupModal) signupModal.style.display = 'none';
+    } else {
+        if (mainContent) mainContent.style.display = 'none';
+        if (loginModal) loginModal.style.display = 'flex';
+        if (signupModal) signupModal.style.display = 'none';
+    }
+}
+function isLoggedIn() {
+    return !!localStorage.getItem('sessionUser');
+}
 document.addEventListener('DOMContentLoaded', function() {
     // Animate main content on page load
     const main = document.querySelector('main');
@@ -462,4 +479,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // After logout, hide Add Event button
     // (Handled in updateNavbarAuth)
+
+    // Check login status on load
+    showMainContent(isLoggedIn());
+    // On successful login/signup, show main content
+    const loginFormOnload = document.getElementById('login-form');
+    if (loginFormOnload) {
+        loginFormOnload.onsubmit = function(e) {
+            e.preventDefault();
+            const username = loginFormOnload.loginUsername.value.trim();
+            const password = loginFormOnload.loginPassword.value;
+            let users = getUsers();
+            if (users.find(u => u.username === username && u.password === password)) {
+                setSessionUser(username);
+                showMainContent(true);
+                loginFormOnload.reset();
+                showToast('Login successful!');
+            } else {
+                alert('Invalid username or password.');
+            }
+        };
+    }
+    const signupFormOnload = document.getElementById('signup-form');
+    if (signupFormOnload) {
+        signupFormOnload.onsubmit = function(e) {
+            e.preventDefault();
+            const username = signupFormOnload.signupUsername.value.trim();
+            const password = signupFormOnload.signupPassword.value;
+            const confirm = signupFormOnload.signupConfirmPassword.value;
+            if (password !== confirm) {
+                alert('Passwords do not match.');
+                return;
+            }
+            let users = getUsers();
+            if (users.find(u => u.username === username)) {
+                alert('Username already exists.');
+                return;
+            }
+            users.push({ username, password });
+            saveUsers(users);
+            setSessionUser(username);
+            showMainContent(true);
+            signupFormOnload.reset();
+            showToast('Sign up successful!');
+        };
+    }
+    // On logout, hide main content and show login
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'nav-logout') {
+            clearSessionUser();
+            showMainContent(false);
+            showToast('Logged out!');
+        }
+    });
+    // Prevent access to main content if not logged in
+    if (!isLoggedIn()) {
+        showMainContent(false);
+    }
 }); 

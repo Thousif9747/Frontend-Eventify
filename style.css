@@ -104,6 +104,13 @@ h3 {
     gap: 2rem;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .brand {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.75rem;
@@ -128,16 +135,16 @@ h3 {
 }
 
 .nav-button {
-    background: transparent;
+    background: #fff;
     border: 2px solid var(--border);
     color: var(--text);
     padding: 0.625rem 1.25rem;
-    border-radius: var(--radius);
+    border-radius: 2em;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(31,38,135,0.08);
 }
-
 .nav-button:hover {
     background: var(--background);
     border-color: var(--primary);
@@ -164,7 +171,8 @@ h3 {
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    margin-left: 0.5em;
+    margin-left: 0.2em;
+    min-width: 110px;
     transition: background 0.2s, color 0.2s;
 }
 #nav-logout:hover {
