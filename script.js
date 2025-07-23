@@ -253,49 +253,54 @@ document.addEventListener('DOMContentLoaded', function() {
                     </form>
             `;
             const bookingForm = document.getElementById('booking-form');
-            bookingForm.addEventListener('submit', function(e) {
+            function handleBooking(booking) {
+                showSpinner(true);
+                return fetch('https://backend-eventify-production.up.railway.app/bookings', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('sessionUser')}`
+                    },
+                    body: JSON.stringify(booking)
+                })
+                .then(response => {
+                    showSpinner(false);
+                    if (!response.ok) {
+                        throw new Error('Booking failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    localStorage.setItem('booking', JSON.stringify(booking));
+                    showToast('Booking successful!');
+                    return data;
+                })
+                .catch(error => {
+                    showSpinner(false);
+                    showToast('Booking failed. Please try again.');
+                    console.error('Booking error:', error);
+                    throw error;
+                });
+            }
+            bookingForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const name = bookingForm.name.value;
-                const email = bookingForm.email.value;
-                const tickets = bookingForm.tickets.value;
-                const phone = bookingForm.phone.value.trim();
-
-                // Phone validation
-                if (!/^\d{10}$/.test(phone)) {
-                    showToast('Please enter a valid 10-digit phone number.');
-                    bookingForm.phone.focus();
-                    return;
-                }
-
                 const booking = {
-                    name,
-                    email,
-                    tickets,
+                    name: bookingForm.name.value,
+                    email: bookingForm.email.value,
+                    tickets: bookingForm.tickets.value,
                     eventName: event.name,
                     eventDate: event.date,
                     eventVenue: event.venue,
-                    phone
+                    phone: bookingForm.phone.value.trim(),
+                    userId: localStorage.getItem('sessionUser')
                 };
-                showSpinner(true);
-                fetch('https://backend-eventify-production.up.railway.app/bookings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(booking)
-                })
-                .then(res => {
-                    showSpinner(false);
-                    if (res.ok) {
-                        localStorage.setItem('booking', JSON.stringify(booking));
-                        showToast('Booking successful!');
-                        setTimeout(() => window.location.href = 'confirmation.html', 800);
-                    } else {
-                        showToast('Booking failed. Please try again.');
-                    }
-                })
-                .catch(() => {
-                    showSpinner(false);
-                    showToast('Booking failed. Please try again.');
-                });
+
+                try {
+                    await handleBooking(booking);
+                    setTimeout(() => window.location.href = 'confirmation.html', 800);
+                } catch (error) {
+                    // Error is already handled in handleBooking
+                }
             });
         } else {
             eventDetailsCard.innerHTML = "<p>Event not found.</p>";
@@ -450,4 +455,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // On page load, update navbar
     updateNavbarAuth();
-}); 
+});

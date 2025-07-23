@@ -65,4 +65,21 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'events.html';
         };
     }
-}); 
+
+    function checkAuthStatus() {
+        const token = localStorage.getItem('userToken');
+        const user = localStorage.getItem('userData');
+        
+        if (!token || !user) {
+            window.location.href = 'auth.html';
+            return false;
+        }
+        return true;
+    }
+
+    if (!checkAuthStatus()) {
+        return;
+    }
+    // Load events and other functionality
+    loadEvents();
+});

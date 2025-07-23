@@ -3,78 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventify - Login or Sign Up</title>
+    <title>Eventify - Authentication</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .auth-toggle {
+        :root {
+            --primary: #333333;
+            --primary-dark: #1a1a1a;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f4f6;
+        }
+
+        .auth-container {
+            min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 1.5em;
+            background: #ffffff;
+            padding: 2em;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 3em;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-header {
+            text-align: center;
             margin-bottom: 2em;
         }
-        .auth-toggle button {
-            font-size: 1.1em;
-            padding: 0.7em 2.2em;
-            border-radius: 2em;
+
+        .auth-header h1 {
+            color: var(--primary);
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+        }
+
+        .auth-header p {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1em 1.2em;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+            background: #f9fafb;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(51,51,51,0.1);
+            outline: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1em;
             border: none;
-            background: var(--background);
-            color: var(--text);
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: all 0.3s;
+            margin-top: 1em;
         }
-        .auth-toggle .active {
-            background: var(--primary);
-            color: #fff;
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 2em;
+            color: var(--text-light);
+        }
+
+        .auth-toggle a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 0.5em;
+        }
+
         .auth-form {
             display: none;
+            animation: slideIn 0.3s ease-out;
         }
+
         .auth-form.active {
             display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2em;
+            }
+
+            .auth-header h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .requirement {
+            margin: 5px 0;
+        }
+
+        .requirement.valid {
+            color: #10B981;
+        }
+
+        .requirement.invalid {
+            color: #EF4444;
+        }
+
+        /* Add these styles to your existing CSS */
+        .password-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            -webkit-user-select: none;
+            user-select: none;
+            z-index: 1;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-    <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f8fafc 0%,#f3f4f6 100%);">
-        <section class="modal" style="display:flex;position:static;background:none;box-shadow:none;align-items:center;justify-content:center;width:100vw;height:100vh;">
-            <div class="modal-content" style="min-width:320px;max-width:400px;width:100%;">
-                <div class="auth-toggle">
-                    <button id="show-login" class="active" type="button">Login</button>
-                    <button id="show-signup" type="button">Sign Up</button>
-                </div>
-                <form id="login-form" class="auth-form active">
-                    <h2>Welcome Back</h2>
-                    <div class="form-group">
-                        <input type="text" name="loginUsername" placeholder="Username" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="loginPassword" placeholder="Password" required />
-                    </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="button button-primary" style="width:100%;">Login</button>
-                    </div>
-                </form>
-                <form id="signup-form" class="auth-form">
-                    <h2>Create Account</h2>
-                    <div class="form-group">
-                        <input type="text" name="signupUsername" placeholder="Username" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="signupPassword" placeholder="Password" required />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="signupConfirmPassword" placeholder="Confirm Password" required />
-                    </div>
-                    <div class="modal-actions">
-                        <button type="submit" class="button button-primary" style="width:100%;">Sign Up</button>
-                    </div>
-                </form>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p id="auth-subtitle">Login to access your account</p>
             </div>
-        </section>
-    </main>
-    <script src="auth.js"></script>
+
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <input type="text" id="loginUsername" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <span class="material-icons password-toggle" onclick="togglePassword('loginPassword', this)">visibility_off</span>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <div class="auth-toggle">
+                    Don't have an account? <a href="#" id="showSignup">Sign Up</a>
+                </div>
+            </form>
+
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <input type="text" id="signupUsername" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <div class="password-input-wrapper">
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                        <span class="material-icons password-toggle" onclick="togglePassword('signupPassword', this)">visibility_off</span>
+                    </div>
+                </div>
+                <div class="password-requirements">
+                    <p>Password must contain:</p>
+                    <div class="requirement">At least 8 characters</div>
+                    <div class="requirement">At least one uppercase letter</div>
+                    <div class="requirement">At least one lowercase letter</div>
+                    <div class="requirement">At least one number</div>
+                    <div class="requirement">At least one special character</div>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+                <div class="auth-toggle">
+                    Already have an account? <a href="#" id="showLogin">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const showSignup = document.getElementById('showSignup');
+        const showLogin = document.getElementById('showLogin');
+        const authSubtitle = document.getElementById('auth-subtitle');
+
+        showSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.remove('active');
+            signupForm.classList.add('active');
+            document.querySelector('.auth-header h1').textContent = 'Create Account';
+            authSubtitle.textContent = 'Sign up to get started';
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.remove('active');
+            loginForm.classList.add('active');
+            document.querySelector('.auth-header h1').textContent = 'Welcome Back';
+            authSubtitle.textContent = 'Login to access your account';
+        });
+
+        // Password validation function
+        function validatePassword(password) {
+            // Minimum 8 characters
+            if (password.length < 8) {
+                return {
+                    isValid: false,
+                    message: "Password must be at least 8 characters long"
+                };
+            }
+
+            // Must contain at least one uppercase letter
+            if (!/[A-Z]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: "Password must contain at least one uppercase letter"
+                };
+            }
+
+            // Must contain at least one lowercase letter
+            if (!/[a-z]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: "Password must contain at least one lowercase letter"
+                };
+            }
+
+            // Must contain at least one number
+            if (!/[0-9]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: "Password must contain at least one number"
+                };
+            }
+
+            // Must contain at least one special character
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                return {
+                    isValid: false,
+                    message: "Password must contain at least one special character"
+                };
+            }
+
+            return {
+                isValid: true,
+                message: "Password is valid"
+            };
+        }
+
+        // Add password validation feedback
+        const passwordInput = document.getElementById('signupPassword');
+        const passwordFeedback = document.createElement('div');
+        passwordFeedback.style.fontSize = '0.8em';
+        passwordFeedback.style.marginTop = '5px';
+        passwordInput.parentNode.appendChild(passwordFeedback);
+
+        passwordInput.addEventListener('input', (e) => {
+            const result = validatePassword(e.target.value);
+            passwordFeedback.style.color = result.isValid ? '#10B981' : '#EF4444';
+            passwordFeedback.textContent = result.message;
+        });
+
+        // Form submission handlers
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const storedUser = localStorage.getItem('user_' + username);
+            if (!storedUser) {
+                alert('User not found');
+                return;
+            }
+
+            const user = JSON.parse(storedUser);
+            if (btoa(password) !== user.password) {
+                alert('Invalid password');
+                return;
+            }
+
+            localStorage.setItem('sessionUser', username);
+            window.location.href = 'events.html';
+        });
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            const passwordValidation = validatePassword(password);
+            
+            if (!passwordValidation.isValid) {
+                alert(passwordValidation.message);
+                return;
+            }
+
+            try {
+                // Here you would typically make an API call to create the user
+                // For now, we'll just store in localStorage
+                const user = {
+                    username,
+                    email,
+                    password: btoa(password) // Basic encoding (not secure for production)
+                };
+                localStorage.setItem('user_' + username, JSON.stringify(user));
+                localStorage.setItem('sessionUser', username);
+                window.location.href = 'events.html';
+            } catch (error) {
+                console.error('Signup failed:', error);
+            }
+        });
+
+        // Fix the togglePassword function
+        function togglePassword(inputId, toggleIcon) {
+            const passwordInput = document.getElementById(inputId);
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+        }
+    </script>
 </body>
-</html> 
+</html>

@@ -1,18 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&family=Roboto:wght@400;500&display=swap');
 
 :root {
-    --primary: #f59e0b;
-    --primary-dark: #d97706;
-    --secondary: #ef4444;
-    --accent: #10b981;
-    --background: #fefefe;
-    --text: #1f2937;
+    --primary: #333333;
+    --primary-dark: #1a1a1a;
+    --secondary: #ff4e50;
     --text-light: #6b7280;
-    --white: #ffffff;
-    --border: #e5e7eb;
-    --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --radius: 1rem;
-    --gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
 }
 
 html, body {
@@ -356,12 +348,12 @@ h3 {
 }
 
 .book-button:hover {
-    background: var(--primary-dark);
+    background: whitesmoke;
 }
 
 .book-btn {
     display: inline-block;
-    background: var(--primary);
+    background: #ac9d9d;
     color: var(--white);
     padding: 0.6rem 1.3rem;
     border-radius: 0.5rem;
@@ -371,12 +363,12 @@ h3 {
     margin-top: 1rem;
     margin-right: 0.5rem;
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 8px rgba(226, 214, 214, 0.07);
     border: none;
     cursor: pointer;
 }
 .book-btn:hover {
-    background: var(--primary-dark);
+    background: var(--white);
     color: var(--white);
     text-decoration: none;
 }
@@ -570,7 +562,7 @@ h3 {
     margin-top: 0.8rem;
     width: 100%;
     font-size: 1.1em;
-    background: var(--primary);
+    background: #ac9d9d;
     color: var(--white);
     border: none;
     border-radius: 0.5rem;
@@ -583,7 +575,7 @@ h3 {
     outline: none;
 }
 #booking-form button[type="submit"]:hover {
-    background: var(--primary-dark);
+    background: whitesmoke;
     transform: scale(1.04);
 }
 @media (max-width: 700px) {
@@ -609,19 +601,35 @@ h3 {
     }
     
     .nav-container {
-        padding: 0 1rem;
+        padding: 1rem;
     }
-    
-    .nav-left, .nav-right {
+
+    .nav-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+    .nav-right {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        flex-direction: column;
+        align-items: center;
         gap: 1rem;
     }
-    
-    .brand {
-        font-size: 1.5rem;
+
+    .nav-right.active {
+        display: flex;
     }
     
     .nav-button {
-        padding: 0.5rem 1rem;
+        width: 100%;
+        text-align: center;
     }
     
     .events-section {
@@ -654,6 +662,27 @@ h3 {
     .modal-content {
         margin: 1rem;
         padding: 1.5rem;
+    }
+    .nav-container {
+        position: relative;
+        flex-wrap: wrap;
+    }
+    .nav-toggle {
+        display: block;
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        cursor: pointer;
+    }
+    .nav-right {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 1.2rem;
+        padding-top: 1.5rem;
+    }
+    .nav-right.active {
+        display: flex;
     }
 } 
 
@@ -973,3 +1002,358 @@ h3 {
 .modal-content, .confirmation-card, .event-details-card {
     will-change: opacity, transform;
 } 
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 5px;
+    background: none;
+    border: none;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--primary);
+    transition: 0.3s;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS
+   ======================================== */
+
+/* Tablet Styles (768px and below) */
+@media (max-width: 768px) {
+    /* Typography adjustments */
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.75rem;
+    }
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* Container padding */
+    .container {
+        padding: 0 1rem;
+    }
+    
+    /* Navigation */
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .nav-left, .nav-right {
+        gap: 1rem;
+    }
+    
+    .brand {
+        font-size: 1.5rem;
+    }
+    
+    /* Hero section */
+    .hero-section {
+        padding: 3rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Search container */
+    .search-container {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .search-container input {
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .search-button {
+        padding: 0.875rem;
+        width: 100%;
+    }
+    
+    /* Events section */
+    .events-section {
+        padding: 4rem 1rem;
+    }
+    
+    .section-header {
+        margin-bottom: 3rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+    }
+    
+    /* Event cards */
+    .event-card {
+        margin: 0;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+        margin: 1rem;
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+    }
+    
+    /* Form adjustments */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    /* Button adjustments */
+    .button {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .modal-actions .button {
+        width: 100%;
+    }
+}
+
+/* Mobile Styles (480px and below) */
+@media (max-width: 480px) {
+    /* Typography */
+    h1 {
+        font-size: 1.75rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* Navigation */
+    .nav-container {
+        padding: 0 0.75rem;
+        flex-wrap: wrap;
+    }
+    
+    .nav-left {
+        gap: 0.5rem;
+    }
+    
+    .nav-right {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .brand {
+        font-size: 1.25rem;
+    }
+    
+    .nav-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Hero section */
+    .hero-section {
+        padding: 2rem 0.75rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Search container */
+    .search-container {
+        margin: 0 0.5rem;
+    }
+    
+    /* Events section */
+    .events-section {
+        padding: 3rem 0.75rem;
+    }
+    
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+    
+    /* Event grid */
+    .event-grid {
+        gap: 1rem;
+    }
+    
+    /* Event cards */
+    .event-card {
+        padding: 1rem;
+    }
+    
+    .event-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .event-card p {
+        font-size: 0.875rem;
+    }
+    
+    /* Modal */
+    .modal-content {
+        margin: 0.5rem;
+        padding: 1.5rem;
+        max-width: calc(100vw - 1rem);
+    }
+    
+    /* Forms */
+    .form-group input,
+    .form-group textarea {
+        padding: 0.75rem;
+    }
+    
+    /* Footer */
+    .main-footer {
+        padding: 2rem 0.75rem;
+        text-align: center;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+}
+
+/* Extra small mobile (320px and below) */
+@media (max-width: 320px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.875rem;
+    }
+    
+    .nav-container {
+        padding: 0 0.5rem;
+    }
+    
+    .brand {
+        font-size: 1.125rem;
+    }
+    
+    .events-section {
+        padding: 2rem 0.5rem;
+    }
+    
+    .modal-content {
+        margin: 0.25rem;
+        padding: 1rem;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hero-subtitle {
+        margin-bottom: 1rem;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* Touch device improvements */
+@media (hover: none) and (pointer: coarse) {
+    .button,
+    .nav-button,
+    .search-button {
+        min-height: 44px; /* iOS recommended touch target size */
+        min-width: 44px;
+    }
+    
+    .event-card {
+        cursor: default;
+    }
+    
+    .event-card:hover {
+        transform: none;
+    }
+    
+    .event-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-section::before {
+        background-size: 50px 50px;
+    }
+}
