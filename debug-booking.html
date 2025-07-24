@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Booking - Music Concert</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo-nav">
+            <span class="logo material-icons">confirmation_number</span>
+            <span class="brand">Eventify</span>
+        </div>
+    </header>
+    <main>
+        <a href="events.html" class="button back-home-btn" style="margin:1.2em 0 0 1.2em;">
+            <span class="material-icons" style="vertical-align:middle;margin-right:0.5em;">arrow_back</span>Back to Events
+        </a>
+        <section id="event-details-card" class="event-details-card">
+            <img src="music.jpeg" alt="Music Concert" class="event-image"/>
+            <h2>Music Concert</h2>
+            <p><strong>Date:</strong> 2024-07-15</p>
+            <p><strong>Venue:</strong> City Hall</p>
+            <p>Enjoy live music from top artists!</p>
+            <form id="booking-form" autocomplete="off">
+                <div class="form-group">
+                    <span class="form-icon">👤</span>
+                    <input type="text" id="name" name="name" required />
+                    <label for="name">Name</label>
+                </div>
+                <div class="form-group">
+                    <span class="form-icon">✉️</span>
+                    <input type="email" id="email" name="email" required />
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group">
+                    <span class="form-icon">📱</span>
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,15}" />
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="form-group">
+                    <span class="form-icon">🎟️</span>
+                    <input type="number" id="tickets" name="tickets" min="1" value="1" required />
+                    <label for="tickets">Tickets</label>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+        </section>
+        <div id="toast" class="toast"></div>
+        <div id="global-spinner" class="spinner" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;">
+            <div style="background:white;padding:20px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.3);text-align:center;">
+                <div style="width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #f7931e;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px;"></div>
+                <p>Processing booking...</p>
+            </div>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Eventify. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Toast notification
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            if (!toast) {
+                console.error('Toast element not found');
+                return;
+            }
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), duration);
+        }
+
+        // Spinner
+        function showSpinner(show = true) {
+            const spinner = document.getElementById('global-spinner');
+            if (!spinner) {
+                console.error('Spinner element not found');
+                return;
+            }
+            spinner.style.display = show ? 'block' : 'none';
+        }
+
+        // Test event data
+        const event = {
+            id: 1,
+            name: "Music Concert",
+            date: "2024-07-15",
+            venue: "City Hall",
+            description: "Enjoy live music from top artists!"
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('booking-form');
+            console.log('Booking form found:', bookingForm);
+            
+            if (!bookingForm) {
+                console.error('Booking form not found!');
+                return;
+            }
+
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submission started');
+                
+                const name = bookingForm.name.value.trim();
+                const email = bookingForm.email.value.trim();
+                const tickets = bookingForm.tickets.value;
+                const phone = bookingForm.phone.value.trim();
+
+                console.log('Form data:', { name, email, tickets, phone });
+
+                // Validation
+                if (!name || !email || !phone || !tickets) {
+                    showToast('Please fill in all fields.');
+                    return;
+                }
+
+                // Phone validation - allow 10-15 digits
+                if (!/^\d{10,15}$/.test(phone)) {
+                    showToast('Please enter a valid phone number (10-15 digits).');
+                    bookingForm.phone.focus();
+                    return;
+                }
+
+                const booking = {
+                    name,
+                    email,
+                    tickets: parseInt(tickets),
+                    eventName: event.name,
+                    eventDate: event.date,
+                    eventVenue: event.venue,
+                    phone
+                };
+                
+                console.log('Submitting booking:', booking);
+                showSpinner(true);
+                showToast('Submitting booking...');
+                
+                fetch('https://backend-eventify-production.up.railway.app/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(booking)
+                })
+                .then(res => {
+                    console.log('Response status:', res.status);
+                    showSpinner(false);
+                    if (res.ok) {
+                        return res.json();
+                    } else {
+                        throw new Error('Booking failed with status: ' + res.status);
+                    }
+                })
+                .then(data => {
+                    console.log('Booking successful:', data);
+                    localStorage.setItem('booking', JSON.stringify(booking));
+                    showToast('Booking successful! Check your email for confirmation.');
+                    setTimeout(() => window.location.href = 'confirmation.html', 1500);
+                })
+                .catch(error => {
+                    console.error('Booking error:', error);
+                    showSpinner(false);
+                    showToast('Booking failed: ' + error.message);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
