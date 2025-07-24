@@ -448,4 +448,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // On page load, update navbar
     updateNavbarAuth();
-}); 
+});
