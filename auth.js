@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
+    // Toggle logic
     const showLoginBtn = document.getElementById('show-login');
     const showSignupBtn = document.getElementById('show-signup');
     const loginForm = document.getElementById('login-form');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveUsers(users) { localStorage.setItem('users', JSON.stringify(users)); }
     function setSessionUser(username) { localStorage.setItem('sessionUser', username); }
 
-
+    // Login logic
     if (loginForm) {
         loginForm.onsubmit = function(e) {
             e.preventDefault();
@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
     }
+    // Signup logic
     if (signupForm) {
         signupForm.onsubmit = function(e) {
             e.preventDefault();
@@ -64,4 +65,21 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'events.html';
         };
     }
-}); 
+
+    function checkAuthStatus() {
+        const token = localStorage.getItem('userToken');
+        const user = localStorage.getItem('userData');
+        
+        if (!token || !user) {
+            window.location.href = 'auth.html';
+            return false;
+        }
+        return true;
+    }
+
+    if (!checkAuthStatus()) {
+        return;
+    }
+    // Load events and other functionality
+    loadEvents();
+});
