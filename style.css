@@ -590,23 +590,19 @@ h3 {
     }
 }
 
-/* Responsive Adjustments */
+/* Responsive Adjustments - Consolidated Mobile Styles */
 @media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
+    /* Navigation */
     .nav-container {
         padding: 1rem;
+        position: relative;
+        flex-wrap: nowrap;
     }
 
     .nav-toggle {
-        display: block;
+        display: flex;
         cursor: pointer;
+        z-index: 1001;
     }
 
     .nav-right {
@@ -616,11 +612,13 @@ h3 {
         left: 0;
         right: 0;
         background: white;
-        padding: 1rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        border-radius: 0 0 15px 15px;
+        z-index: 1000;
     }
 
     .nav-right.active {
@@ -629,9 +627,27 @@ h3 {
     
     .nav-button {
         width: 100%;
+        max-width: 200px;
         text-align: center;
+        padding: 0.75rem 1.5rem;
+    }
+
+    /* Hero section */
+    .hero-content h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
     }
     
+    .hero-subtitle {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section {
+        padding: 4rem 1rem;
+    }
+    
+    /* Events section */
     .events-section {
         padding: 4rem 1rem;
     }
@@ -650,39 +666,47 @@ h3 {
         padding: 0;
     }
     
+    /* Search container */
     .search-container {
         margin: 0 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
     }
     
     .search-container input {
         padding: 0.875rem 1.25rem;
         font-size: 1rem;
     }
+
+    .search-button {
+        width: 100%;
+        padding: 0.875rem;
+    }
     
+    /* Modal adjustments */
     .modal-content {
         margin: 1rem;
         padding: 1.5rem;
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
     }
-    .nav-container {
-        position: relative;
-        flex-wrap: wrap;
+
+    /* Form improvements */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px; /* Prevents zoom on iOS */
     }
-    .nav-toggle {
-        display: block;
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        cursor: pointer;
-    }
-    .nav-right {
-        display: none;
+
+    .modal-actions {
         flex-direction: column;
-        width: 100%;
-        gap: 1.2rem;
-        padding-top: 1.5rem;
+        gap: 0.75rem;
     }
-    .nav-right.active {
-        display: flex;
+
+    .modal-actions .button {
+        width: 100%;
     }
 } 
 
