@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script>
       if (!localStorage.getItem('sessionUser')) {
-        window.location.href = 'index.html';
+        window.location.href = 'auth.html';
       }
     </script>
     <style>
@@ -40,9 +40,100 @@
             font-size: 2rem;
             font-weight: 800;
         }
+        
+        /* Mobile responsiveness for admin dashboard */
+        @media (max-width: 768px) {
+            .admin-table {
+                width: 98%;
+                margin: 1rem auto;
+                font-size: 0.9rem;
+            }
+            
+            .admin-table th, .admin-table td {
+                padding: 0.6rem 0.5rem;
+            }
+            
+            .admin-title {
+                font-size: 1.8rem;
+                margin-top: 1rem;
+                padding: 0 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .admin-table {
+                width: 100%;
+                margin: 0.5rem auto;
+                font-size: 0.8rem;
+                overflow-x: auto;
+                display: block;
+                white-space: nowrap;
+            }
+            
+            .admin-table thead,
+            .admin-table tbody,
+            .admin-table th,
+            .admin-table td,
+            .admin-table tr {
+                display: block;
+            }
+            
+            .admin-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            .admin-table tr {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                background: white;
+            }
+            
+            .admin-table td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50% !important;
+                white-space: normal;
+                text-align: left;
+            }
+            
+            .admin-table td:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .admin-title {
+                font-size: 1.5rem;
+                margin-top: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div style="padding: 1rem; background: rgba(255,255,255,0.9);">
+        <button onclick="window.location.href='events.html'" style="
+            background: #333; 
+            color: white; 
+            border: none; 
+            padding: 0.5rem 1rem; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        " onmouseover="this.style.background='#1a1a1a'" onmouseout="this.style.background='#333'">
+            ← Back to Events
+        </button>
+    </div>
     <h1 class="admin-title">Admin Dashboard - Bookings</h1>
     <table class="admin-table" id="bookings-table">
         <thead>
