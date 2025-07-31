@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 bookings.forEach(b => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${b.id}</td>
-                        <td>${b.eventName}</td>
-                        <td>${b.eventDate}</td>
-                        <td>${b.eventVenue}</td>
-                        <td>${b.name}</td>
-                        <td>${b.email}</td>
-                        <td>${b.phone || ''}</td>
-                        <td>${b.tickets}</td>
+                        <td data-label="ID">${b.id}</td>
+                        <td data-label="Event">${b.eventName}</td>
+                        <td data-label="Date">${b.eventDate}</td>
+                        <td data-label="Venue">${b.eventVenue}</td>
+                        <td data-label="Name">${b.name}</td>
+                        <td data-label="Email">${b.email}</td>
+                        <td data-label="Phone">${b.phone || ''}</td>
+                        <td data-label="Tickets">${b.tickets}</td>
                     `;
                     tbody.appendChild(row);
                 });
