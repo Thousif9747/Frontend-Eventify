@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>
       if (!localStorage.getItem('sessionUser')) {
-        window.location.href = 'index.html';
+        window.location.href = 'auth.html';
       }
     </script>
     <style>
@@ -118,6 +118,80 @@
             font-size: 1em;
         }
     }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+    
+    /* Mobile Menu Styles */
+    .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        gap: 4px;
+    }
+    
+    .mobile-menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+    
+    @media (max-width: 768px) {
+        .mobile-menu-toggle {
+            display: flex;
+        }
+        
+        .nav-right {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex-direction: column;
+            padding: 1rem;
+            border-radius: 0 0 15px 15px;
+            z-index: 1000;
+        }
+        
+        .nav-right.active {
+            display: flex;
+        }
+        
+        .nav-right .nav-button {
+            width: 100%;
+            text-align: center;
+            padding: 0.8rem;
+            margin: 0.2rem 0;
+        }
+    }
     </style>
 </head>
 <body>
@@ -128,7 +202,12 @@
                 <a href="index.html" class="nav-link active">Home</a>
                 <a id="nav-add-event" class="nav-button" href="#" style="display:inline-block;">+ Add Event</a>
             </div>
-            <div class="nav-right">
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-right" id="nav-right">
                 <button id="nav-logout" class="nav-button">Logout</button>
             </div>
         </nav>
@@ -139,6 +218,7 @@
                 <h1>Discover Amazing Events</h1>
                 <p class="hero-subtitle">Book tickets for the best events in your city</p>
                 <div class="search-container">
+                    <label for="event-search" class="sr-only">Search events</label>
                     <input id="event-search" type="text" placeholder="Search events by name or venue..." />
                     <button class="search-button" aria-label="Search">
                         <span class="material-icons">search</span>
@@ -173,20 +253,24 @@
                 <form id="add-event-form">
                     <h2>Add New Event</h2>
                     <div class="form-group">
-                        <input type="text" name="name" placeholder="Event Name" required />
+                        <label for="event-name">Event Name</label>
+                        <input type="text" id="event-name" name="name" placeholder="Event Name" required />
                     </div>
                     <div class="form-group">
                         <label for="event-date">Date</label>
                         <input type="date" id="event-date" name="date" required title="Event date" />
                     </div>
                     <div class="form-group">
-                        <input type="text" name="venue" placeholder="Venue" required />
+                        <label for="event-venue">Venue</label>
+                        <input type="text" id="event-venue" name="venue" placeholder="Venue" required />
                     </div>
                     <div class="form-group">
-                        <textarea name="description" placeholder="Description" required></textarea>
+                        <label for="event-description">Description</label>
+                        <textarea id="event-description" name="description" placeholder="Description" required></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="image" placeholder="Image URL (or leave blank)" />
+                        <label for="event-image">Image URL (optional)</label>
+                        <input type="text" id="event-image" name="image" placeholder="Image URL (or leave blank)" />
                     </div>
                     <div class="form-group">
                         <label for="event-category">Category</label>
@@ -229,6 +313,33 @@
           localStorage.removeItem('sessionUser');
           window.location.href = 'index.html';
         };
+      }
+      
+      // Mobile menu functionality
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const navRight = document.getElementById('nav-right');
+      
+      if (mobileMenuToggle && navRight) {
+        mobileMenuToggle.addEventListener('click', function() {
+          mobileMenuToggle.classList.toggle('active');
+          navRight.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+          if (!mobileMenuToggle.contains(event.target) && !navRight.contains(event.target)) {
+            mobileMenuToggle.classList.remove('active');
+            navRight.classList.remove('active');
+          }
+        });
+        
+        // Close mobile menu when window is resized to desktop
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768) {
+            mobileMenuToggle.classList.remove('active');
+            navRight.classList.remove('active');
+          }
+        });
       }
     </script>
 </body>
