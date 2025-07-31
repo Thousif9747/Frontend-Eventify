@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #f8fafc 0%, #f3f4f6 100%);
             padding: 2rem;
             text-align: center;
+            position: relative;
         }
         
         .welcome-card {
@@ -25,6 +26,18 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 500px;
             width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .welcome-card h1 {
@@ -57,6 +70,8 @@
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
+            min-height: 44px; /* Minimum touch target size */
+            box-sizing: border-box;
         }
         
         .btn-primary {
@@ -81,22 +96,83 @@
             transform: translateY(-2px);
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
+            .welcome-container {
+                padding: 1.5rem;
+                min-height: 100vh;
+                justify-content: center;
+            }
+            
             .welcome-card {
-                padding: 2rem;
-                margin: 1rem;
+                padding: 2.5rem 2rem;
+                margin: 0;
+                max-width: 90%;
+                border-radius: 16px;
             }
             
             .welcome-card h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .welcome-card p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+                line-height: 1.6;
             }
             
             .welcome-buttons {
                 flex-direction: column;
+                gap: 1rem;
             }
             
             .welcome-btn {
                 width: 100%;
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-container {
+                padding: 1rem;
+                min-height: 100vh;
+            }
+            
+            .welcome-card {
+                padding: 2rem 1.5rem;
+                max-width: 95%;
+                border-radius: 12px;
+            }
+            
+            .welcome-card h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .welcome-card p {
+                font-size: 1rem;
+                margin-bottom: 1.8rem;
+            }
+            
+            .welcome-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 10px;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .welcome-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .welcome-card h1 {
+                font-size: 1.8rem;
+            }
+            
+            .welcome-card p {
+                font-size: 0.95rem;
             }
         }
     </style>
