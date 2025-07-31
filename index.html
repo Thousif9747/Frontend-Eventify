@@ -6,399 +6,118 @@
     <title>Eventify - Welcome</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* Hero section styles */
-        .hero-section {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            padding: 3em 1em 2em 1em;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5em;
-            font-weight: 800;
-            color: #333;
-            margin-bottom: 0.5em;
-        }
-
-        .hero-content p {
-            font-size: 1.25em;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 2em auto;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1.5em;
-            justify-content: center;
-            margin-top: 2em;
-        }
-
-        .hero-actions a {
-            padding: 1em 2.5em;
-            border-radius: 2em;
-            font-size: 1.15em;
-            font-weight: 700;
-            text-decoration: none;
-            background: #f7931e;  /* Changed from #333 to orange */
-            color: white;
-            box-shadow: 0 4px 16px rgba(247,147,30,0.3);
-            transition: all 0.3s;
-        }
-
-        .hero-actions a.secondary {
-            background: transparent;
-            color: #f7931e;  /* Changed from #333 to orange */
-            border: 2px solid #f7931e;  /* Changed from #333 to orange */
-        }
-
-        .hero-actions a:hover {
-            background: #ff4e50;  /* Changed to red-orange */
-            transform: scale(1.05);
-        }
-
-        .hero-actions a.secondary:hover {
-            background: rgba(247,147,30,0.1);  /* Changed to light orange */
-        }
-
-        /* Update the header styles */
-        .main-header {
-            background: white;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            left: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .nav-container .brand,
-        .nav-container .nav-link,
-        .nav-container .nav-button {
-            color: #333;
-        }
-
-        .nav-container .nav-button {
-            border: 2px solid rgba(51, 51, 51, 0.2);
-        }
-
-        .nav-container .nav-button:hover {
-            background: rgba(51, 51, 51, 0.1);
-        }
-
-        /* About hero section styles */
-        .about-hero {
-            min-height: 80vh;
+        .welcome-container {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #f8fafc 0%, #f3f4f6 100%);
-            padding: 3em 1em 2em 1em;
+            padding: 2rem;
             text-align: center;
         }
-
-        .about-hero h1 {
-            font-size: 2.7em;
-            font-weight: 800;
-            margin-bottom: 0.5em;
-            color: var(--primary);
-        }
-
-        .about-hero p {
-            font-size: 1.25em;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 2em auto;
-        }
-
-        .about-actions {
-            display: flex;
-            gap: 1.5em;
-            justify-content: center;
-            margin-top: 2em;
-        }
-
-        .about-actions a {
-            padding: 1em 2.5em;
-            border-radius: 2em;
-            font-size: 1.15em;
-            font-weight: 700;
-            text-decoration: none;
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(245,158,11,0.10);
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .about-actions a.secondary {
-            background: var(--secondary);
-        }
-
-        .about-actions a:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .about-actions a.secondary:hover {
-            background: #d32f2f;
-        }
-
-        /* New styles for events section */
-        .events-section {
-            padding: 4em 2em;
-            background: #f8fafc;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3em;
-        }
-
-        .section-header h2 {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: #666; /* Changed from #333 to #666 */
-            margin-bottom: 0.3em;
-        }
-
-        .section-header p {
-            font-size: 1.2em;
-            color: #666;
-        }
-
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2em;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .event-card {
+        
+        .welcome-card {
             background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .event-image {
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
             width: 100%;
-            height: 200px;
-            object-fit: cover;
         }
-
-        .event-content {
-            padding: 1.5em;
+        
+        .welcome-card h1 {
+            color: #333;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
         }
-
-        .event-tag {
-            display: inline-block;
-            padding: 0.5em 1em;
-            border-radius: 50px;
-            background: #f3f4f6;
+        
+        .welcome-card p {
             color: #666;
-            font-size: 0.9em;
-            margin-bottom: 1em;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
         }
-
-        .event-title {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #666; /* Changed from #333 to #666 */
-            margin-bottom: 0.5em;
-        }
-
-        .event-details {
-            color: #666;
-            margin-bottom: 1.5em;
-        }
-
-        .event-date, .event-venue {
+        
+        .welcome-buttons {
             display: flex;
-            align-items: center;
-            gap: 0.5em;
-            margin-bottom: 0.5em;
-            font-size: 0.95em;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        .book-btn {
-            display: inline-block;
-            padding: 0.8em 2em;
-            background: #f7931e;  /* Changed from white to orange */
-            color: white;  /* Changed from #666 to white */
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
+        
+        .welcome-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
-            border: none;  /* Removed border */
-            box-shadow: 0 4px 16px rgba(247,147,30,0.2);
+            text-decoration: none;
+            display: inline-block;
         }
-
-        .book-btn:hover {
-            background: #ff4e50;  /* Changed to red-orange */
+        
+        .btn-primary {
+            background: #333;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #333;
+            border: 2px solid #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #333;
             color: white;
             transform: translateY(-2px);
         }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                min-height: 70vh;
-                padding: 2em 1em;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5em;
-            }
-
-            .hero-content p {
-                font-size: 1.1em;
-                padding: 0 1em;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                width: 90%;
-                max-width: 300px;
-                margin: 2em auto 0 auto;
-            }
-
-            .hero-actions a {
-                width: 100%;
-                text-align: center;
-                padding: 0.8em 1em;
-            }
-
-            .about-hero {
-                min-height: 70vh;
-                padding: 2em 1em;
-            }
-
-            .about-hero h1 {
-                font-size: 2.2em;
-            }
-
-            .about-actions {
-                flex-direction: column;
-                width: 90%;
-                max-width: 300px;
-            }
-
-            .about-actions a {
-                width: 100%;
-                text-align: center;
-                padding: 0.8em 1em;
-            }
-
-            .events-section {
-                padding: 3em 1em;
-            }
-
-            .section-header h2 {
-                font-size: 2.2em;
-            }
-
-            .events-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            }
-        }
-
+        
         @media (max-width: 480px) {
-            .hero-content h1 {
-                font-size: 2em;
+            .welcome-card {
+                padding: 2rem;
+                margin: 1rem;
             }
-
-            .hero-content p {
-                font-size: 1em;
+            
+            .welcome-card h1 {
+                font-size: 2.5rem;
             }
-
-            .event-image {
-                height: 150px;
+            
+            .welcome-buttons {
+                flex-direction: column;
             }
-
-            .event-title {
-                font-size: 1.2em;
-            }
-
-            .book-btn {
-                padding: 0.7em 1.5em;
-                font-size: 0.9em;
+            
+            .welcome-btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <header class="main-header">
-        <nav class="nav-container">
-            <div class="nav-left">
-                <a href="index.html" class="brand">🎫 Eventify</a>
-                <a href="index.html" class="nav-link active">About</a>
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h1>Eventify</h1>
+            <p>Your premier destination for booking amazing events and experiences.</p>
+            <div class="welcome-buttons">
+                <a href="auth.html" class="welcome-btn btn-primary">Get Started</a>
+                <a href="about.html" class="welcome-btn btn-secondary">Learn More</a>
             </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="nav-right" id="nav-right">
-                <a href="auth.html" class="nav-button">Login</a>
-                <a href="auth.html" class="nav-button">Sign Up</a>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Welcome to Eventify</h1>
-                <p>Eventify is your one-stop platform to discover, book, and enjoy amazing events in your city. Whether you love music, art, tech, sports, or education, Eventify brings the best experiences to your fingertips. Sign up or log in to start booking your next adventure!</p>
-                <div class="hero-actions">
-                    <a href="auth.html" class="primary">Login</a>
-                    <a href="auth.html" class="secondary">Sign Up</a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer class="main-footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Eventify. All rights reserved.</p>
         </div>
-    </footer>
+    </div>
+    
     <script>
-        const navToggle = document.getElementById('nav-toggle');
-        const navRight = document.getElementById('nav-right');
-
-        if (navToggle && navRight) {
-            navToggle.addEventListener('click', () => {
-                navRight.classList.toggle('active');
-                navToggle.classList.toggle('active');
-            });
-        }
-
-        function logout() {
-            localStorage.removeItem('userToken');
-            localStorage.removeItem('userData');
-            window.location.href = 'index.html';
+        // Check if user is already logged in
+        if (localStorage.getItem('sessionUser')) {
+            window.location.href = 'events.html';
         }
     </script>
 </body>
 </html>
-
