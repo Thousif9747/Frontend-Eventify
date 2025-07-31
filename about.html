@@ -28,8 +28,9 @@
                 <h1>Discover Amazing Events</h1>
                 <p class="hero-subtitle">Book tickets for the best events in your city</p>
                 <div class="search-container">
+                    <label for="event-search" class="sr-only">Search events</label>
                     <input id="event-search" type="text" placeholder="Search events by name or venue..." />
-                    <button class="search-button">
+                    <button class="search-button" aria-label="Search">
                         <span class="material-icons">search</span>
                     </button>
                 </div>
@@ -63,20 +64,24 @@
                 <form id="add-event-form">
                     <h2>Add New Event</h2>
                     <div class="form-group">
-                        <input type="text" name="name" placeholder="Event Name" required />
+                        <label for="about-event-name">Event Name</label>
+                        <input type="text" id="about-event-name" name="name" placeholder="Event Name" required />
                     </div>
                     <div class="form-group">
                         <label for="event-date">Date</label>
                         <input type="date" id="event-date" name="date" required title="Event date" />
                     </div>
                     <div class="form-group">
-                        <input type="text" name="venue" placeholder="Venue" required />
+                        <label for="about-event-venue">Venue</label>
+                        <input type="text" id="about-event-venue" name="venue" placeholder="Venue" required />
                     </div>
                     <div class="form-group">
-                        <textarea name="description" placeholder="Description" required></textarea>
+                        <label for="about-event-description">Description</label>
+                        <textarea id="about-event-description" name="description" placeholder="Description" required></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="image" placeholder="Image URL (or leave blank)" />
+                        <label for="about-event-image">Image URL (optional)</label>
+                        <input type="text" id="about-event-image" name="image" placeholder="Image URL (or leave blank)" />
                     </div>
                     <div class="form-group">
                         <label for="event-category">Category</label>
@@ -103,10 +108,12 @@
                 <form id="login-form">
                     <h2>Welcome Back</h2>
                     <div class="form-group">
-                        <input type="text" name="loginUsername" placeholder="Username" required />
+                        <label for="about-login-username">Username</label>
+                        <input type="text" id="about-login-username" name="loginUsername" placeholder="Username" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" name="loginPassword" placeholder="Password" required />
+                        <label for="about-login-password">Password</label>
+                        <input type="password" id="about-login-password" name="loginPassword" placeholder="Password" required />
                     </div>
                     <div class="modal-actions">
                         <button type="button" id="cancel-login" class="button button-secondary">Cancel</button>
@@ -122,13 +129,16 @@
                 <form id="signup-form">
                     <h2>Create Account</h2>
                     <div class="form-group">
-                        <input type="text" name="signupUsername" placeholder="Username" required />
+                        <label for="about-signup-username">Username</label>
+                        <input type="text" id="about-signup-username" name="signupUsername" placeholder="Username" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" name="signupPassword" placeholder="Password" required />
+                        <label for="about-signup-password">Password</label>
+                        <input type="password" id="about-signup-password" name="signupPassword" placeholder="Password" required />
                     </div>
                     <div class="form-group">
-                        <input type="password" name="signupConfirmPassword" placeholder="Confirm Password" required />
+                        <label for="about-signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="about-signup-confirm-password" name="signupConfirmPassword" placeholder="Confirm Password" required />
                     </div>
                     <div class="modal-actions">
                         <button type="button" id="cancel-signup" class="button button-secondary">Cancel</button>
