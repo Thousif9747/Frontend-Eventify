@@ -83,7 +83,7 @@ function renderEvents(filter = '', category = '', page = 1) {
         `;
         eventList.appendChild(card);
     });
-    // Pagination controls
+  
     if (pagination) {
         pagination.innerHTML = '';
         if (totalPages > 1) {
@@ -97,7 +97,6 @@ function renderEvents(filter = '', category = '', page = 1) {
             }
         }
     }
-    // Add delete event listeners
     document.querySelectorAll('.delete-event-btn').forEach(btn => {
         btn.onclick = function() {
             const id = parseInt(this.getAttribute('data-id'));
@@ -108,7 +107,7 @@ function renderEvents(filter = '', category = '', page = 1) {
             }
         };
     });
-    // Book button logic: navigate to event.html with event id
+ 
     document.querySelectorAll('.book-btn').forEach(btn => {
         btn.onclick = function(e) {
             e.preventDefault();
@@ -118,7 +117,6 @@ function renderEvents(filter = '', category = '', page = 1) {
     });
 }
 
-// Toast notification logic
 function showToast(message, duration = 2500) {
     const toast = document.getElementById('toast');
     if (!toast) return;
@@ -126,7 +124,6 @@ function showToast(message, duration = 2500) {
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), duration);
 }
-// Spinner logic
 function showSpinner(show = true) {
     const spinner = document.getElementById('global-spinner');
     if (!spinner) return;
@@ -151,13 +148,12 @@ function isLoggedIn() {
     return !!localStorage.getItem('sessionUser');
 }
 document.addEventListener('DOMContentLoaded', function() {
-    // Animate main content on page load
+  
     const main = document.querySelector('main');
     if (main) main.classList.add('fade-in');
-    // Render events from localStorage or default
+   
     renderEvents();
 
-    // Event search functionality
     const eventSearch = document.getElementById('event-search');
     const categoryFilter = document.getElementById('category-filter');
 
@@ -167,14 +163,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Category filter logic
     if (categoryFilter) {
         categoryFilter.addEventListener('change', function() {
             renderEvents(eventSearch?.value || '', categoryFilter.value, 1);
         });
     }
 
-    // Navbar Add Event button opens modal
     const navAddEvent = document.getElementById('nav-add-event');
     const addEventModal = document.getElementById('add-event-modal');
     const addEventForm = document.getElementById('add-event-form');
@@ -315,7 +309,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Login/Signup modal logic
     const loginModal = document.getElementById('login-modal');
     const signupModal = document.getElementById('signup-modal');
     const navLogin = document.getElementById('nav-login');
@@ -332,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (loginModal && loginForm) loginModal.onclick = e => { if (e.target === loginModal) { loginModal.style.display = 'none'; loginForm.reset(); } };
     if (signupModal && signupForm) signupModal.onclick = e => { if (e.target === signupModal) { signupModal.style.display = 'none'; signupForm.reset(); } };
 
-    // LocalStorage user management
     function getUsers() {
         const u = localStorage.getItem('users');
         if (u) try { return JSON.parse(u); } catch { return []; }
@@ -340,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function saveUsers(users) { localStorage.setItem('users', JSON.stringify(users)); }
 
-    // Sign Up
     if (signupForm) {
         signupForm.onsubmit = function(e) {
             e.preventDefault();
@@ -365,7 +356,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Login
     if (loginForm) {
         loginForm.onsubmit = function(e) {
             e.preventDefault();
@@ -386,7 +376,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Session management
     function setSessionUser(username) {
         localStorage.setItem('sessionUser', username);
     }
@@ -445,7 +434,5 @@ document.addEventListener('DOMContentLoaded', function() {
             if (navLogout) navLogout.remove();
         }
     }
-
-    // On page load, update navbar
     updateNavbarAuth();
 });
